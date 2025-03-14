@@ -48,7 +48,7 @@ Mở trình duyệt và truy cập `http://127.0.0.1:5000/`
                             http://172.20.10.9:5000/
 để xem blog.
 ```
-#4. Hình ảnh minh họa
+### 4.Hình ảnh minh họa
 Bài viết hiển thị với hình ảnh ngẫu nhiên từ [Picsum Photos](https://picsum.photos/):
 
 ![Demo](https://picsum.photos/600/300)
