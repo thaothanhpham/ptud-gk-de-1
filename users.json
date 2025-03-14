@@ -68,5 +68,12 @@
         "role": "user",
         "blocked": false,
         "block_reason": ""
+    },
+    {
+        "username": "phamthanhthao",
+        "password": "123",
+        "role": "user",
+        "blocked": false,
+        "block_reason": ""
     }
 ]
