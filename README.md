@@ -33,27 +33,18 @@
 git clone https://github.com/thaothanhpham/ptud-gk-de-1.git
 cd ptud-gk-de-1
 ```
-#### Bước 2: Tạo môi trường ảo
-```sh
+#### Bước 2: Tạo môi trường ảo và cài đặt dependencies
+
 python -m venv venv
-source venv/bin/activate  # Trên macOS/Linux
-venv\Scripts\activate  # Trên Windows
-```
-#### Bước 3: Cài đặt thư viện
-```sh
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-```
-#### Bước 4: Khởi tạo cơ sở dữ liệu
-```sh
-flask db init
-flask db migrate -m "Khởi tạo database"
-flask db upgrade
-```
 #### Bước 5: Chạy ứng dụng
 ```sh
-flask run
+python app.py
 ```
-Mở trình duyệt và truy cập `http://127.0.0.1:5000/` để xem blog.
+Mở trình duyệt và truy cập `http://127.0.0.1:5000/` 
+                            http://172.20.10.9:5000/
+để xem blog.
 
 ## 4. Hình ảnh minh họa
 Bài viết hiển thị với hình ảnh ngẫu nhiên từ [Picsum Photos](https://picsum.photos/):
