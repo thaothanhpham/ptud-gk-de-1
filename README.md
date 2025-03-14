@@ -34,18 +34,20 @@ git clone https://github.com/thaothanhpham/ptud-gk-de-1.git
 cd ptud-gk-de-1
 ```
 #### Bước 2: Tạo môi trường ảo và cài đặt dependencies
-
+```sh
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-#### Bước 5: Chạy ứng dụng
+```
+#### Bước 3: Chạy ứng dụng
 ```sh
 python app.py
 ```
 Mở trình duyệt và truy cập `http://127.0.0.1:5000/` 
+
                             http://172.20.10.9:5000/
 để xem blog.
-
+```
 ## 4. Hình ảnh minh họa
 Bài viết hiển thị với hình ảnh ngẫu nhiên từ [Picsum Photos](https://picsum.photos/):
 
