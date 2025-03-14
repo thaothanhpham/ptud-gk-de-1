@@ -6,11 +6,12 @@
         {% for post in posts %}
             <div class="col-md-4 mb-3">
                 <div class="card">
+                    <img src="https://picsum.photos/300/200?random={{ post.id }}" class="card-img-top" alt="Ảnh bài viết">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.content[:100] }}...</p>
                         <p class="card-text"><small class="text-muted">Tác giả: {{ post.author }} | {{ post.date }}</small></p>
-                        <a href="{{ url_for('post', post_id=post.id) }}" class="btn btn-primary">Xem chi tiết</a>
+                        <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-primary">Xem chi tiết</a>
                     </div>
                 </div>
             </div>

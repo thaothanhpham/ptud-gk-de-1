@@ -11,6 +11,7 @@ app.secret_key = 'your_secret_key'
 #file lưu trữ 
 USERS_FILE = 'users.json'
 POSTS_FILE = 'posts.json'
+COMMENTS_FILE = 'comments.json'
 
 # Dữ liệu giả lập 
 initial_users = [
@@ -128,7 +129,7 @@ def save_data(data, file_path):
 # Khởi tạo 
 users = load_data(USERS_FILE, initial_users)
 posts = load_data(POSTS_FILE, initial_posts)
-
+comments = load_data(COMMENTS_FILE, [])
 # Phân trang
 POSTS_PER_PAGE = 10
 
@@ -191,6 +192,7 @@ def index(page=1):
     total_posts = len(published_posts)
     total_pages = (total_posts // POSTS_PER_PAGE) + (1 if total_posts % POSTS_PER_PAGE else 0)
     
+    
     # Debug
     print(f"Debug: Tổng số bài viết 'Đã đăng': {total_posts}, Tổng số trang: {total_pages}")
 
@@ -206,6 +208,53 @@ def index(page=1):
     print(f"Debug: Hiển thị bài viết trên trang {page}: {[post['id'] for post in paginated_posts]}")
 
     return render_template('index.html', posts=paginated_posts, page=page, total_pages=total_pages)
+
+# Chi tiết bài viết và bình luận
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def post_detail(post_id):
+    post = next((p for p in posts if p['id'] == post_id), None)
+    if not post:
+        flash('Bài viết không tồn tại!', 'danger')
+        return redirect(url_for('index'))
+
+    post_comments = [c for c in comments if c['post_id'] == post_id]
+
+    if request.method == 'POST':
+        if 'user' not in session:
+            flash('Vui lòng đăng nhập để bình luận!', 'danger')
+            return redirect(url_for('login'))
+        
+        content = request.form['content']
+        if not content.strip():
+            flash('Nội dung bình luận không được để trống!', 'danger')
+            return redirect(url_for('post_detail', post_id=post_id))
+
+        new_comment = {
+            "id": len(comments) + 1,
+            "post_id": post_id,
+            "author": session['user']['username'],
+            "content": content,
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M")
+        }
+        comments.append(new_comment)
+        save_data(comments, COMMENTS_FILE)
+        flash('Bình luận đã được đăng!', 'success')
+        return redirect(url_for('post_detail', post_id=post_id))
+
+    return render_template('post.html', post=post, comments=post_comments)
+
+# Trang Dashboard
+@app.route('/dashboard')
+def dashboard():
+    if 'user' not in session or session['user']['role'] != 'admin':
+        flash('Bạn không có quyền truy cập trang này!', 'danger')
+        return redirect(url_for('index'))
+
+    total_posts = len(posts)
+    total_comments = len(comments)
+    total_users = len(users)
+
+    return render_template('dashboard.html', total_posts=total_posts, total_comments=total_comments, total_users=total_users)
 
 # Trang chi tiết bài viết
 @app.route('/post/<int:post_id>')
